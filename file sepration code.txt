@@ -1,0 +1,36 @@
+import os ,shutil
+dict_files={
+'audio_extensions'    : ('.mp3','.m4a','.wav','.flac'),
+'video_extensions'    : ('.mp4','.mkv','.MKV','.flv'),
+'images_extensions'   : ('.jpg'),
+'document_extensions' : ('.txt','.doc','.pdf')}
+folderpath=input("enter the folder path")
+
+
+def file_finder(folder_path,file_extensions):
+    files=[]
+    for file in os.listdir(folder_path):
+        for extensions in file_extensions:
+            if file.endswith(extensions):
+                files.append(file)
+    return files
+for file_type,file_tuple in dict_files.items():
+    foldername=file_type.split('_')[0]+"files"
+    fpath=os.path.join(folderpath,foldername)
+    if  os.path.exists(fpath):
+        pass
+    else:
+        os.mkdir(fpath)
+    for item in file_finder(folderpath,file_tuple):
+        item_path=os.path.join(folderpath,item)
+        new_path=os.path.join(fpath,item)
+        shutil.move(item_path,new_path)
+os.chdir(folderpath)
+for item in os.listdir(os.getcwd()):
+    if os.path.isdir(item):
+        if not os.listdir(item):
+         os.rmdir(item)
+
+
+
+
